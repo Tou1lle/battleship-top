@@ -6,11 +6,14 @@ function Ship(length) {
   let timesHit = 0;
 
   const hit = () => timesHit++;
-  const isSunk = () => { timesHit === length };
+  const isSunk = () => timesHit >= length;
 
   return {
     get timesHit() {
       return timesHit;
+    },
+    get length() {
+      return length;
     },
     hit,
     isSunk,
