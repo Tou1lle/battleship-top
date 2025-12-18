@@ -1,5 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import { Ship } from "./ship.js";
 
+/**
+ * Representation of the board where Ships are placed
+ * @returns Gameboard object
+ */
 function GameBoard() {
   const board = Array(10)
     .fill()
