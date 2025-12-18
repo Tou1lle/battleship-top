@@ -34,7 +34,7 @@ describe("GameBoard board Creation & Ship Placing", () => {
     const gameboard = GameBoard();
     const ship = Ship(2);
     gameboard.board[0][0] = ship;
-    
+
     expect(gameboard.board[0][0] == gameboard.board[2][0]).toBeFalsy();
   });
 
@@ -42,7 +42,7 @@ describe("GameBoard board Creation & Ship Placing", () => {
     const gameboard = GameBoard();
     const ship = Ship(2);
     gameboard.board[0][0] = ship;
-    
+
     expect(gameboard.board[0][1]).toBeUndefined();
     expect(gameboard.board[0][0]).toBe(ship);
   });
@@ -50,8 +50,8 @@ describe("GameBoard board Creation & Ship Placing", () => {
   test("placeShip - Able to put Ship at empty coordinates vertically", () => {
     const gameboard = GameBoard();
     const ship = Ship(3);
-    expect(gameboard.placeShip([0,0], "vertical", ship)).toBeTruthy();
-    
+    expect(gameboard.placeShip([0, 0], "vertical", ship)).toBe(true);
+
     expect(gameboard.board[0][0]).toBe(ship);
     expect(gameboard.board[1][0]).toBe(ship);
     expect(gameboard.board[2][0]).toBe(ship);
@@ -62,8 +62,8 @@ describe("GameBoard board Creation & Ship Placing", () => {
   test("placeShip - Able to put Ship at empty coordinates horizontally", () => {
     const gameboard = GameBoard();
     const ship = Ship(3);
-    expect(gameboard.placeShip([0,0], "horizontal", ship)).toBeTruthy();
-    
+    expect(gameboard.placeShip([0, 0], "horizontal", ship)).toBeTruthy();
+
     expect(gameboard.board[0][0]).toBe(ship);
     expect(gameboard.board[0][1]).toBe(ship);
     expect(gameboard.board[0][2]).toBe(ship);
@@ -75,13 +75,13 @@ describe("GameBoard board Creation & Ship Placing", () => {
     const gameboard = GameBoard();
     const ship = Ship(3);
     expect(gameboard.placeShip([0, 10], "vertical", ship)).toBeFalsy();
-  })
+  });
 
   test("placeShip - Not able to use out of bound values (< 0 or > 9) Horizontal", () => {
     const gameboard = GameBoard();
     const ship = Ship(3);
     expect(gameboard.placeShip([-1, 0], "horizontal", ship)).toBeFalsy();
-  })
+  });
 
   test("placeShip - Not able to put ship on occupied slot Vertical", () => {
     const gameboard = GameBoard();
@@ -91,7 +91,7 @@ describe("GameBoard board Creation & Ship Placing", () => {
     expect(gameboard.placeShip([4, 0], "horizontal", ship)).toBeTruthy();
     expect(gameboard.placeShip([1, 1], "vertical", otherShip)).toBeFalsy();
     expect(gameboard.board[1][1]).toBeUndefined();
-  })
+  });
 
   test("placeShip - Not able to put ship on occupied slot Horizontal", () => {
     const gameboard = GameBoard();
@@ -101,7 +101,7 @@ describe("GameBoard board Creation & Ship Placing", () => {
     expect(gameboard.placeShip([0, 3], "vertical", ship)).toBeTruthy();
     expect(gameboard.placeShip([1, 1], "horizontal", otherShip)).toBeFalsy();
     expect(gameboard.board[1][1]).toBeUndefined();
-  })
+  });
 
   test("placeShip - Place more than 1 ship", () => {
     const gameboard = GameBoard();
@@ -112,5 +112,40 @@ describe("GameBoard board Creation & Ship Placing", () => {
     expect(gameboard.placeShip([1, 1], "horizontal", otherShip)).toBeTruthy();
     expect(gameboard.board[1][1]).toBe(otherShip);
     expect(gameboard.board[5][3]).toBe(ship);
-  })
+  });
+});
+
+describe("Receive attacks on the board", () => {
+  test("Attack on empty coordinates mark it as missed", () => {
+    const gameboard = GameBoard();
+    expect(gameboard.receiveAttack(0, 3)).toBeTruthy();
+    expect(gameboard.board[0][3]).toBe("x");
+  });
+
+  test("Consecutive attacks on missed mark doesn't go through", () => {
+    const gameboard = GameBoard();
+    expect(gameboard.receiveAttack(0, 3)).toBeTruthy();
+    expect(gameboard.board[0][3]).toBe("x");
+    expect(gameboard.receiveAttack(0, 3)).toBeFalsy();
+  });
+
+  test("Attack on spot occupied by Ship hits the Ship", () => {
+    const gameboard = GameBoard();
+    const ship = Ship(3);
+    gameboard.placeShip([1, 1], "vertical", ship);
+    expect(gameboard.receiveAttack(2, 1)).toBeTruthy();
+    expect(gameboard.board[2][1]).toBe(ship);
+    expect(ship.timesHit).toBe(1);
+  });
+
+  test("Attack on already hit spot of Ship doesn't go through", () => {
+    const gameboard = GameBoard();
+    const ship = Ship(3);
+    gameboard.placeShip([1, 1], "horizontal", ship);
+    expect(gameboard.receiveAttack(1, 3)).toBeTruthy();
+    expect(gameboard.receiveAttack(1, 3)).toBeFalsy();
+    expect(gameboard.receiveAttack(1, 3)).toBeFalsy();
+    expect(gameboard.board[1][3]).toBe(ship);
+    expect(ship.timesHit).toBe(1);
+  });
 });

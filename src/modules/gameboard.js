@@ -1,7 +1,10 @@
+import { Ship } from "./ship.js";
+
 function GameBoard() {
   const board = Array(10)
     .fill()
     .map(() => Array(10));
+  const attackedCoordinates = [];
   const miss = "x";
   const lowerEdge = 0;
   const upperEdge = board.length - 1;
@@ -36,6 +39,13 @@ function GameBoard() {
     return false;
   }
 
+  /**
+   * 
+   * @param {Array} rowCol coordinates y(row), x(column) in an array
+   * @param {string} direction string representation of horizontal or vertical
+   * @param {Ship} ship ship object reprenting a piece in Battleship boardgame
+   * @returns 
+   */
   const placeShip = (rowCol, direction, ship) => {
     if (!hasEnouhSpace(rowCol, direction, ship) || occupied(rowCol, direction, ship)) return false;
     let [row, col] = rowCol;
@@ -48,11 +58,28 @@ function GameBoard() {
     return true;
   };
 
+  const receiveAttack = (y, x) => {
+    if (attackedCoordinates.find((arr) => arr[0] === y && arr[1] === x)) return false;
+
+    if (!board[y][x]) {
+      board[y][x] = miss;
+      attackedCoordinates.push([y,x]);
+      return true;
+    }
+
+    if (board[y][x] && typeof board[y][x] !== "string") {
+      board[y][x].hit();
+      attackedCoordinates.push([y,x]);
+      return true;
+    }
+  }
+
   return {
     get board() {
       return board;
     },
     placeShip,
+    receiveAttack,
   };
 }
 
