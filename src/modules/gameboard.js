@@ -10,6 +10,7 @@ function GameBoard() {
     .fill()
     .map(() => Array(10));
   const attackedCoordinates = [];
+  const ships = [];
   const miss = "x";
   const lowerEdge = 0;
   const upperEdge = board.length - 1;
@@ -60,6 +61,7 @@ function GameBoard() {
       direction === vertical ? row++ : col++ ;
     }
 
+    ships.push(ship);
     return true;
   };
 
@@ -79,12 +81,17 @@ function GameBoard() {
     }
   }
 
+  const allSunk = () => {
+    return ships.every(ship => ship.isSunk());
+  }
+
   return {
     get board() {
       return board;
     },
     placeShip,
     receiveAttack,
+    allSunk
   };
 }
 

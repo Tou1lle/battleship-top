@@ -148,4 +148,58 @@ describe("Receive attacks on the board", () => {
     expect(gameboard.board[1][3]).toBe(ship);
     expect(ship.timesHit).toBe(1);
   });
+
+  test("All ships not yet sunk - no hit yet", () => {
+    const gameboard = GameBoard();
+    const ship2 = Ship(2);
+    const ship3 = Ship(3);
+    gameboard.placeShip([0,0], "horizontal", ship2);
+    gameboard.placeShip([2,0], "horizontal", ship3);
+    expect(gameboard.allSunk()).toBeDefined();
+    expect(gameboard.allSunk()).toBeFalsy();
+    });
+
+    test("All ships not yet sunk - received some attacks", () => {
+    const gameboard = GameBoard();
+    const ship2 = Ship(2);
+    const ship3 = Ship(3);
+    gameboard.placeShip([0,0], "horizontal", ship2);
+    gameboard.placeShip([2,0], "horizontal", ship3);
+    gameboard.receiveAttack(0,0);
+    gameboard.receiveAttack(2,0);
+    expect(gameboard.allSunk()).toBeDefined();
+    expect(gameboard.allSunk()).toBeFalsy();
+    });
+
+    test("All ships not yet sunk - 1/2 ship sunk", () => {
+    const gameboard = GameBoard();
+    const ship2 = Ship(2);
+    const ship3 = Ship(3);
+    gameboard.placeShip([0,0], "horizontal", ship2);
+    gameboard.placeShip([2,0], "horizontal", ship3);
+    gameboard.receiveAttack(0,0);
+    gameboard.receiveAttack(0,1); 
+    expect(ship2.isSunk()).toBeTruthy(); 
+    gameboard.receiveAttack(2,0);
+    expect(ship3.isSunk()).toBeFalsy();
+    expect(gameboard.allSunk()).toBeDefined();
+    expect(gameboard.allSunk()).toBeFalsy();
+    });
+
+    test("All ships sunk - 2/2 ships sunk", () => {
+    const gameboard = GameBoard();
+    const ship2 = Ship(2);
+    const ship3 = Ship(3);
+    gameboard.placeShip([0,0], "horizontal", ship2);
+    gameboard.placeShip([2,0], "horizontal", ship3);
+    gameboard.receiveAttack(0,0);
+    gameboard.receiveAttack(0,1); 
+    expect(ship2.isSunk()).toBeTruthy(); 
+    gameboard.receiveAttack(2,0);
+    gameboard.receiveAttack(2,1);
+    gameboard.receiveAttack(2,2);
+    expect(ship3.isSunk()).toBeTruthy();
+    expect(gameboard.allSunk()).toBeDefined();
+    expect(gameboard.allSunk()).toBeTruthy();
+    });
 });
