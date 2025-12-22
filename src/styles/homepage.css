@@ -1,5 +1,12 @@
 :root {
   --simple-font: Arial, Helvetica, sans-serif;
+  --dark-sand: #d3a95c;
+  --light-sand: #e7d9b9;
+  --battleship-gray: #6f7476;
+  --light-blue: #4984b8;
+  --dark-blue: #221188;
+  --resort-sunrise: #f4d7c5;
+  --hint-of-red: #f6dfe0;
 }
 
 *, *::before, *::after {
@@ -16,4 +23,17 @@
 
 .body-container {
   flex-grow: 1;
+  background-color: var(--light-blue);
+}
+
+.header-container,
+.footer-container {
+  background-color: var(--dark-sand);
+  color: var(--hint-of-red);
+  padding: 1rem;
+  text-align: center;
+}
+
+.footer-container {
+  padding: 0.5rem;
 }
