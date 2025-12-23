@@ -1,6 +1,7 @@
 /*eslint-disable no-undef*/
 import { Ship } from "../modules/ship.js";
 import { GameBoard } from "../modules/gameboard.js";
+import { Player } from "../modules/player.js";
 
 describe("Ship Pieces", () => {
   const destroyer = Ship(3);
@@ -202,4 +203,22 @@ describe("Receive attacks on the board", () => {
     expect(gameboard.allSunk()).toBeDefined();
     expect(gameboard.allSunk()).toBeTruthy();
     });
+});
+
+describe("Testing Gameflow controller", () => {
+  test("Right coordinates are returned - available", () => {
+    const gameboard = GameBoard();
+    const player = Player("Player_1", "real", gameboard);
+    expect(gameboard.board[2].length).toBe(10);
+    expect(player.gameboard.board[2].length).toBe(10);
+    expect(player.gameboard.board).toBe(gameboard.board);
+    gameboard.receiveAttack(2,0);
+    gameboard.receiveAttack(2,1);
+    gameboard.receiveAttack(2,2);
+    console.log(player.getAvailableCoordinates());
+    //Received 3 attacks, so available should be 100 - 3
+    expect(player.getAvailableCoordinates().length).toBe(97);
+    expect(player.getAvailableCoordinates().some(xy => xy.join("") == "20")).toBeFalsy();
+    expect(player.getAvailableCoordinates().some(xy => xy.join("") == "23")).toBeTruthy();
+  })
 });

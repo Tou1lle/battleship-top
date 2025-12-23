@@ -91,7 +91,8 @@ function GameBoard() {
     },
     placeShip,
     receiveAttack,
-    allSunk
+    allSunk,
+    attackedCoordinates
   };
 }
 
