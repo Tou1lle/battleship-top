@@ -7,6 +7,7 @@
   --dark-blue: #221188;
   --resort-sunrise: #f4d7c5;
   --hint-of-red: #f6dfe0;
+  --gameboard-size: 450px;
 }
 
 *, *::before, *::after {
@@ -24,12 +25,41 @@
 .body-container {
   flex-grow: 1;
   background-color: var(--light-blue);
+  color: var(--light-sand);
   display: flex;
+  align-items: center;
 }
 
 .player1-container,
 .player2-container {
   flex-grow: 1;
+  text-align: center;
+}
+
+.player1-gameboard-container,
+.player2-gameboard-container {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.player1-gameboard,
+.player2-gameboard {
+  background-color: var(--resort-sunrise);
+  width: var(--gameboard-size);
+  height: var(--gameboard-size);
+}
+
+.player1-ships-container,
+.player2-ships-container {
+  background-color: var(--hint-of-red);
+  height: var(--gameboard-size);
+  flex: 1;
+  border-radius: 15px;
+}
+
+.player2-ships-container {
+  order: 2;
 }
 
 .missile-icon-container {
