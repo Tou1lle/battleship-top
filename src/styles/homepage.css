@@ -24,6 +24,18 @@
 .body-container {
   flex-grow: 1;
   background-color: var(--light-blue);
+  display: flex;
+}
+
+.player1-container,
+.player2-container {
+  flex-grow: 1;
+}
+
+.missile-icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .header-container,
