@@ -1,4 +1,4 @@
-function Player(name, type, gameboard) {
+function Player(name, gameboard, type = "real") {
   const usedCoordinates = gameboard.attackedCoordinates;
   const allCoordinates = [];
   for (let y = 0; y < 10; y++) {
@@ -29,7 +29,7 @@ function Player(name, type, gameboard) {
   };
 }
 
-function ComputerPlayer(name, type, gameboard) {
+function ComputerPlayer(name, gameboard, type = "computer") {
   const player = Player(name, type, gameboard);
   
   return Object.assign({}, player);

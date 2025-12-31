@@ -8,7 +8,7 @@ import { Ship } from "./ship.js";
 function GameBoard() {
   const board = Array(10)
     .fill()
-    .map(() => Array(10));
+    .map(() => Array(10).fill(""));
   const attackedCoordinates = [];
   const ships = [];
   const miss = "x";
