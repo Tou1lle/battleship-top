@@ -17,11 +17,23 @@ function Gameflow() {
   player1.gameboard.placeShip([3,0], "horizontal", Ship(4));
   player1.gameboard.placeShip([4,0], "horizontal", Ship(5));
 
+  player1.gameboard.receiveAttack(5,0);
+  player1.gameboard.receiveAttack(0,0);
+  player1.gameboard.receiveAttack(9,9);
+
+  const clearBoard = (boardUI) => {
+    boardUI.textContent = "";
+  }  
+
   const renderBoardShown = (player, boardUI) => {
+    clearBoard(boardUI);
     player.gameboard.board.forEach((row, indexY) => {
-      row.forEach((cell, indexX) => {
+      row.forEach((collumn, indexX) => {
         const div = document.createElement("div");
-        const occupant = !cell ? "empty" : cell === "x" ? "missed-shot" : "ship";
+        const occupant = !collumn ? "empty" : collumn === "x" ? "missed-shot" : "ship";
+        const hitShip = player.gameboard.attackedCoordinates.some(xy => xy.join("") === `${indexY}${indexX}`)
+                        ? true : false;
+        if (hitShip) div.classList.add("hit");
         div.classList.add(occupant);
         div.classList.add("cell");
         div.classList.add("show");

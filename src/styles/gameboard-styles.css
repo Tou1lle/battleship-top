@@ -1,0 +1,25 @@
+/* Create grid-like board */
+.player-gameboard {
+  border: 2px solid var(--dark-sand);
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+/* Seperate cells */
+.cell {
+  border: 1px solid var(--dark-sand);
+}
+
+/* Seperate cell coloring based on its state -> class */
+.cell.show.ship {
+  background-color: var(--battleship-gray);
+}
+
+.cell.show.missed-shot {
+  background-color: var(--light-blue);
+}
+
+.cell.ship.show.hit {
+  background-color: darkred;
+}

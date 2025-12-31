@@ -1,3 +1,4 @@
+/* Global variables */
 :root {
   --simple-font: Arial, Helvetica, sans-serif;
   --dark-sand: #d3a95c;
@@ -10,18 +11,21 @@
   --gameboard-size: 450px;
 }
 
+/* Simple resets */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   font-family: var(--simple-font);
 }
 
+/* Whole page - replacing <body> */
 .home-battleship {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
 
+/* Main section containting player boards */
 .body-container {
   flex-grow: 1;
   background-color: var(--light-blue);
@@ -68,6 +72,7 @@
   justify-content: center;
 }
 
+/* Header and footer */
 .header-container,
 .footer-container {
   background-color: var(--dark-sand);
