@@ -89,10 +89,15 @@ function GameBoard() {
     get board() {
       return board;
     },
+    get ships() {
+      return ships;
+    },
+    get attackedCoordinates() {
+      return attackedCoordinates;
+    },
     placeShip,
     receiveAttack,
     allSunk,
-    attackedCoordinates
   };
 }
 

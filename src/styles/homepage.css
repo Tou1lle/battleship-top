@@ -60,6 +60,9 @@
   height: var(--gameboard-size);
   flex: 1;
   border-radius: 15px;
+  color: var(--light-blue);
+  display: flex;
+  flex-direction: column;
 }
 
 .player2-ships-container {
