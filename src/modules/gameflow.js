@@ -31,8 +31,9 @@ function Gameflow() {
       row.forEach((collumn, indexX) => {
         const div = document.createElement("div");
         const occupant = !collumn ? "empty" : collumn === "x" ? "missed-shot" : "ship";
-        const hitShip = player.gameboard.attackedCoordinates.some(xy => xy.join("") === `${indexY}${indexX}`)
-                        ? true : false;
+        const hitShip = player.gameboard.attackedCoordinates.some((
+          xy => xy.join("") === `${indexY}${indexX}` && occupant === "ship"
+        )) ? true : false;
         if (hitShip) div.classList.add("hit");
         div.classList.add(occupant);
         div.classList.add("cell");
