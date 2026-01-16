@@ -23,3 +23,16 @@
 .cell.ship.show.hit {
   background-color: darkred;
 }
+
+/* Sidebar with ships */
+.ship-dots-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ship-dot {
+  height: 30px;
+  width: 30px;
+  border: 1px solid var(--light-blue);
+}

@@ -48,6 +48,10 @@ function Gameflow() {
     boardUI.textContent = "";
   }
 
+  const clearShips = (shipsUI) => {
+    shipsUI.textContent = "";
+  }
+
   const renderNames = (players, namesUI) => {
     for (let i = 0; i < namesUI.length; i++) {
       namesUI[i].textContent = players[i].name;
@@ -75,6 +79,7 @@ function Gameflow() {
   }
 
   const renderShips = (player, ships, shipsUI) => {
+    clearShips(shipsUI);
     ships.forEach((ship, id) => {
       const div = document.createElement("div");
       const shipNameH3 = document.createElement("h3");
@@ -82,6 +87,7 @@ function Gameflow() {
       for (let i = 0; i < ship.length; i++) {
         const dot = document.createElement("div");
         dot.classList.add("ship-dot");
+        shipLengthDots.appendChild(dot);
       }
       shipLengthDots.classList.add("ship-dots-container");
       shipNameH3.classList.add("ship-name")

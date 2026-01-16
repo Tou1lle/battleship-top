@@ -59,10 +59,12 @@
   background-color: var(--hint-of-red);
   height: var(--gameboard-size);
   flex: 1;
+  width: 0px;
   border-radius: 15px;
   color: var(--light-blue);
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .player2-ships-container {
