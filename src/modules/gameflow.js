@@ -43,6 +43,7 @@ function Gameflow() {
   player1.gameboard.receiveAttack(5,0);
   player1.gameboard.receiveAttack(0,0);
   player1.gameboard.receiveAttack(9,9);
+  player1.gameboard.receiveAttack(2,2);
 
   const clearBoard = (boardUI) => {
     boardUI.textContent = "";
@@ -97,7 +98,16 @@ function Gameflow() {
 
       div.append(shipNameH3, shipLengthDots);
       shipsUI.appendChild(div);
+      renderTimesHit(ship, shipLengthDots);
     });
+  }
+
+  const renderTimesHit = (ship, container) => {
+    const timesHit = ship.timesHit;
+    const dots = Array.from(container.querySelectorAll(".ship-dot"));
+    for (let i = 0; i < timesHit; i++) {
+      dots[i].classList.add("ship-dot-hit");
+    }
   }
 
   renderBoardShown(player1, playerGameboardsUI[0]);

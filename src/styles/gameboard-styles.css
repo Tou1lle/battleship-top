@@ -36,3 +36,7 @@
   width: 30px;
   border: 1px solid var(--light-blue);
 }
+
+.ship-dot-hit {
+  background-color: darkred;
+}
