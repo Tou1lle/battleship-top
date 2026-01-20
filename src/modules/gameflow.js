@@ -19,26 +19,11 @@ function Gameflow() {
   const player2 = ComputerPlayer("Player_2_PC", GameBoard());
   const players = [player1, player2];
 
-  const ships1 = [
-    Ship(2),
-    Ship(3),
-    Ship(3),
-    Ship(4),
-    Ship(5)
-  ];
-  const ships2 = [
-    Ship(2),
-    Ship(3),
-    Ship(3),
-    Ship(4),
-    Ship(5)
-  ];
-
-  player1.gameboard.placeShip([0,0], "horizontal", ships1[0]);
-  player1.gameboard.placeShip([1,0], "horizontal", ships1[1]);
-  player1.gameboard.placeShip([2,0], "horizontal", ships1[2]);
-  player1.gameboard.placeShip([3,0], "horizontal", ships1[3]);
-  player1.gameboard.placeShip([4,0], "horizontal", ships1[4]);
+  player1.gameboard.placeShip([0,0], "horizontal", Ship(2));
+  player1.gameboard.placeShip([1,0], "horizontal", Ship(3));
+  player1.gameboard.placeShip([2,0], "horizontal", Ship(3));
+  player1.gameboard.placeShip([3,0], "horizontal", Ship(4));
+  player1.gameboard.placeShip([4,0], "horizontal", Ship(5));
 
   player1.gameboard.receiveAttack(5,0);
   player1.gameboard.receiveAttack(0,0);
@@ -79,9 +64,9 @@ function Gameflow() {
     });
   }
 
-  const renderShips = (player, ships, shipsUI) => {
+  const renderShips = (player, shipsUI) => {
     clearShips(shipsUI);
-    ships.forEach((ship, id) => {
+    player.gameboard.ships.forEach((ship, id) => {
       const div = document.createElement("div");
       const shipNameH3 = document.createElement("h3");
       const shipLengthDots = document.createElement("div");
@@ -112,7 +97,7 @@ function Gameflow() {
 
   renderBoardShown(player1, playerGameboardsUI[0]);
   renderNames(players, playerNamesUI);
-  renderShips(player1, ships1, playerShipsUI[0]);
+  renderShips(player1, playerShipsUI[0]);
 }
 
 export { Gameflow };
