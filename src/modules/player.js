@@ -30,7 +30,7 @@ function Player(name, gameboard, type = "real") {
 }
 
 function ComputerPlayer(name, gameboard, type = "computer") {
-  const player = Player(name, type, gameboard);
+  const player = Player(name, gameboard, type);
   
   return Object.assign({}, player);
 }

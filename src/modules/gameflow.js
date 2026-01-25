@@ -20,6 +20,9 @@ function Gameflow() {
   const players = [player1, player2];
   let activePlayer = players[0];
 
+  console.log(player1);
+  console.log(player2);
+
   player1.gameboard.placeShip([0,0], "horizontal", Ship(2));
   player1.gameboard.placeShip([1,0], "horizontal", Ship(3));
   player1.gameboard.placeShip([2,0], "horizontal", Ship(3));
@@ -31,6 +34,12 @@ function Gameflow() {
   player1.gameboard.receiveAttack(9,9);
   player1.gameboard.receiveAttack(2,2);
 
+  player2.gameboard.placeShip([0,0], "horizontal", Ship(2));
+  player2.gameboard.placeShip([1,0], "horizontal", Ship(3));
+  player2.gameboard.placeShip([2,0], "horizontal", Ship(3));
+  player2.gameboard.placeShip([3,0], "horizontal", Ship(4));
+  player2.gameboard.placeShip([4,0], "horizontal", Ship(5));
+
   const clearBoard = (boardUI) => {
     boardUI.textContent = "";
   }
@@ -39,7 +48,7 @@ function Gameflow() {
     shipsUI.textContent = "";
   }
 
-  const getActiveIndex = () => {
+  const getActivePlayerIndex = () => {
     return players.findIndex(player => player === activePlayer);
   }
 
@@ -105,8 +114,10 @@ function Gameflow() {
   }
 
   renderBoardShown(player1, playerGameboardsUI[0]);
+  renderBoardShown(player2, playerGameboardsUI[1])
   renderNames(players, playerNamesUI);
   renderShips(player1, playerShipsUI[0]);
+  renderShips(player2, playerShipsUI[1]);
 }
 
 export { Gameflow };
