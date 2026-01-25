@@ -18,6 +18,7 @@ function Gameflow() {
   const player1 = Player("Player_1", GameBoard());
   const player2 = ComputerPlayer("Player_2_PC", GameBoard());
   const players = [player1, player2];
+  let activePlayer = players[0];
 
   player1.gameboard.placeShip([0,0], "horizontal", Ship(2));
   player1.gameboard.placeShip([1,0], "horizontal", Ship(3));
@@ -36,6 +37,14 @@ function Gameflow() {
 
   const clearShips = (shipsUI) => {
     shipsUI.textContent = "";
+  }
+
+  const getActiveIndex = () => {
+    return players.findIndex(player => player === activePlayer);
+  }
+
+  const changeTurn = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
   }
 
   const renderNames = (players, namesUI) => {
