@@ -40,6 +40,14 @@ function Gameflow() {
   player2.gameboard.placeShip([3,0], "horizontal", Ship(4));
   player2.gameboard.placeShip([4,0], "horizontal", Ship(5));
 
+  const updatePage = () => {
+    renderBoardShown(players[0], playerGameboardsUI[0]);
+    renderBoardShown(players[1], playerGameboardsUI[1])
+    renderNames(players, playerNamesUI);
+    renderShips(players[0], playerShipsUI[0]);
+    renderShips(players[1], playerShipsUI[1]);
+  }
+
   const clearBoard = (boardUI) => {
     boardUI.textContent = "";
   }
@@ -59,14 +67,6 @@ function Gameflow() {
   const changeTargetedTurn = () => {
     targetedPlayer = targetedPlayer === players[0] ? players[1] : players[0];
   }
-
-  /**
-   * testing code
-   * checking that we get the right targeted player, the player that is on turn and the board based on the player index
-   */
-  console.log(targetedPlayer.type);
-  console.log(getOnTurnPlayer().type);
-  console.log(playerGameboardsUI[getTargetedPlayerIndex()]);
 
   const renderNames = (players, namesUI) => {
     for (let i = 0; i < namesUI.length; i++) {
@@ -125,11 +125,7 @@ function Gameflow() {
     }
   }
 
-  renderBoardShown(player1, playerGameboardsUI[0]);
-  renderBoardShown(player2, playerGameboardsUI[1])
-  renderNames(players, playerNamesUI);
-  renderShips(player1, playerShipsUI[0]);
-  renderShips(player2, playerShipsUI[1]);
+  updatePage();
 }
 
 export { Gameflow };
