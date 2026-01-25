@@ -18,7 +18,7 @@ function Gameflow() {
   const player1 = Player("Player_1", GameBoard());
   const player2 = ComputerPlayer("Player_2_PC", GameBoard());
   const players = [player1, player2];
-  let activePlayer = players[0];
+  let targetedPlayer = players[1];
 
   console.log(player1);
   console.log(player2);
@@ -48,13 +48,25 @@ function Gameflow() {
     shipsUI.textContent = "";
   }
 
-  const getActivePlayerIndex = () => {
-    return players.findIndex(player => player === activePlayer);
+  const getTargetedPlayerIndex = () => {
+    return players.findIndex(player => player === targetedPlayer);
   }
 
-  const changeTurn = () => {
-    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  const getOnTurnPlayer = () => {
+    return targetedPlayer === players[0] ? players[1] : players[0];
   }
+
+  const changeTargetedTurn = () => {
+    targetedPlayer = targetedPlayer === players[0] ? players[1] : players[0];
+  }
+
+  /**
+   * testing code
+   * checking that we get the right targeted player, the player that is on turn and the board based on the player index
+   */
+  console.log(targetedPlayer.type);
+  console.log(getOnTurnPlayer().type);
+  console.log(playerGameboardsUI[getTargetedPlayerIndex()]);
 
   const renderNames = (players, namesUI) => {
     for (let i = 0; i < namesUI.length; i++) {
