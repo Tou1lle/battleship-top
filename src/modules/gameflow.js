@@ -68,6 +68,14 @@ function Gameflow() {
     targetedPlayer = targetedPlayer === players[0] ? players[1] : players[0];
   }
 
+  const getTargetedBoard = () => {
+    return document.querySelector(".target-attack")
+  }
+
+  const toggleBoard = (board) => {
+    board.classList.toggle("target-attack");
+  }
+
   const renderNames = (players, namesUI) => {
     for (let i = 0; i < namesUI.length; i++) {
       namesUI[i].textContent = players[i].name;
@@ -123,6 +131,10 @@ function Gameflow() {
     for (let i = 0; i < timesHit; i++) {
       dots[i].classList.add("ship-dot-hit");
     }
+  }
+
+  const playRound = (e) => {
+    console.log(e.target);
   }
 
   updatePage();
