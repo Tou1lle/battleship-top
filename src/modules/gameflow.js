@@ -18,6 +18,7 @@ function Gameflow() {
   const player1 = Player("Player_1", GameBoard());
   const player2 = ComputerPlayer("Player_2_PC", GameBoard());
   const players = [player1, player2];
+  //set the computer player to be targeted first
   let targetedPlayer = players[1];
 
   console.log(player1);
@@ -48,6 +49,15 @@ function Gameflow() {
     renderShips(players[1], playerShipsUI[1]);
   }
 
+  const initialize = () => {
+    //render UI elemets
+    updatePage();
+    //set the board of targeted player to be enabled for attacking
+    Array.from(playerGameboardsUI[getTargetedPlayerIndex()].querySelectorAll(".cell"))
+    .forEach(cell => cell.classList.add("attack-enabled"));
+
+  }
+
   const clearBoard = (boardUI) => {
     boardUI.textContent = "";
   }
@@ -60,12 +70,30 @@ function Gameflow() {
     return players.findIndex(player => player === targetedPlayer);
   }
 
-  const getOnTurnPlayer = () => {
+  const getAttackingPlayer = () => {
     return targetedPlayer === players[0] ? players[1] : players[0];
   }
 
-  const changeTargetedTurn = () => {
+  const toggleTargetedPlayer = () => {
     targetedPlayer = targetedPlayer === players[0] ? players[1] : players[0];
+  }
+
+  const getTargetedPlayer = () => {
+    return targetedPlayer;
+  }
+
+  const getTargetedBoard = () => {
+    return playerGameboardsUI[getTargetedPlayerIndex()];
+  }
+
+  const toggleTargetedCell = () => {
+    playerGameboardsUI.forEach(boardUI => Array.from(boardUI.querySelectorAll(".cell"))
+    .forEach(cell => cell.classList.toggle("attack-enabled")));
+  }
+
+  const changeTurns = () => {
+    toggleTargetedPlayer();
+    
   }
 
   const renderNames = (players, namesUI) => {
@@ -129,7 +157,7 @@ function Gameflow() {
     console.log(e.target);
   }
 
-  updatePage();
+  initialize();
 }
 
 export { Gameflow };
