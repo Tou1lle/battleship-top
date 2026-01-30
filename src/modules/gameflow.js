@@ -75,11 +75,6 @@ function Gameflow() {
     return targetedPlayer;
   }
 
-  const toggleTargetedCell = () => {
-    playerGameboardsUI.forEach(boardUI => Array.from(boardUI.querySelectorAll(".cell"))
-    .forEach(cell => cell.classList.toggle("attack-enabled")));
-  }
-
   const setTargetedCell = () => {
     Array.from(playerGameboardsUI[getTargetedPlayerIndex()].querySelectorAll(".cell"))
     .forEach(cell => cell.classList.add("attack-enabled"));
