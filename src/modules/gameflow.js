@@ -41,6 +41,8 @@ function Gameflow() {
   player2.gameboard.placeShip([3,0], "horizontal", Ship(4));
   player2.gameboard.placeShip([4,0], "horizontal", Ship(5));
 
+  player2.gameboard.receiveAttack(0,0);
+
   const updatePage = () => {
     renderBoardShown(players[0], playerGameboardsUI[0]);
     renderBoardShown(players[1], playerGameboardsUI[1])
@@ -53,9 +55,7 @@ function Gameflow() {
     //render UI elemets
     updatePage();
     //set the board of targeted player to be enabled for attacking
-    Array.from(playerGameboardsUI[getTargetedPlayerIndex()].querySelectorAll(".cell"))
-    .forEach(cell => cell.classList.add("attack-enabled"));
-
+    setTargetedCell();
   }
 
   const clearBoard = (boardUI) => {
@@ -82,18 +82,19 @@ function Gameflow() {
     return targetedPlayer;
   }
 
-  const getTargetedBoard = () => {
-    return playerGameboardsUI[getTargetedPlayerIndex()];
-  }
-
   const toggleTargetedCell = () => {
     playerGameboardsUI.forEach(boardUI => Array.from(boardUI.querySelectorAll(".cell"))
     .forEach(cell => cell.classList.toggle("attack-enabled")));
   }
 
+  const setTargetedCell = () => {
+    Array.from(playerGameboardsUI[getTargetedPlayerIndex()].querySelectorAll(".cell"))
+    .forEach(cell => cell.classList.add("attack-enabled"));
+  }
+
   const changeTurns = () => {
     toggleTargetedPlayer();
-    toggleTargetedCell();
+    setTargetedCell();
   }
 
   const renderNames = (players, namesUI) => {
@@ -111,12 +112,15 @@ function Gameflow() {
         const hitShip = player.gameboard.attackedCoordinates.some((
           xy => xy.join("") === `${indexY}${indexX}` && occupant === "ship"
         )) ? true : false;
-        if (hitShip) div.classList.add("hit");
         div.classList.add(occupant);
         div.classList.add("cell");
         div.classList.add("show");
         div.dataset.y = indexY;
         div.dataset.x = indexX;
+        if (hitShip) div.classList.add("hit");
+        if (div.classList.contains("hit") || div.classList.contains("missed-shot")) {
+          div.classList.add("attack-invalid");
+        }
         boardUI.appendChild(div);
       })
     });
@@ -154,11 +158,21 @@ function Gameflow() {
   }
 
   const playRound = (e) => {
-    console.log(e.target);
-    //conditions
-    //attack
+    const clickedPlace = e.target;
+    console.log(getAttackingPlayer().type);
+    if (
+      !(clickedPlace.hasAttribute("data-x") || clickedPlace.hasAttribute("data-y")) ||
+      !(clickedPlace.classList.contains("attack-enabled")) ||
+      !(getAttackingPlayer().type === "real") ||
+      (clickedPlace.classList.contains("attack-invalid"))
+    ) {
+      console.log("Conditions not met for attacking!");
+      return;
+    };
+    getTargetedPlayer().gameboard.receiveAttack(clickedPlace.dataset.y, clickedPlace.dataset.x);
+    updatePage();
     //check winning conditions
-    //change turns
+    changeTurns();
     //check if new attacking player is a computer
     //attack by computer
     //check winning conditions
@@ -166,7 +180,7 @@ function Gameflow() {
   }
 
   initialize();
-  console.log(player2.computeCoordinates(player1.gameboard.attackedCoordinates))
+  playerGameboardsUI.forEach(boardUI => boardUI.addEventListener("click", playRound));
 }
 
 export { Gameflow };

@@ -6,9 +6,17 @@
   grid-template-columns: repeat(10, 1fr);
 }
 
+.player-gameboard:hover {
+  cursor: pointer;
+}
+
 /* Seperate cells */
 .cell {
   border: 1px solid var(--dark-sand);
+}
+
+.cell:hover {
+  background-color: var(--light-sand);
 }
 
 /* Seperate cell coloring based on its state -> class */
