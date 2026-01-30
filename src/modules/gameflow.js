@@ -30,18 +30,11 @@ function Gameflow() {
   player1.gameboard.placeShip([3,0], "horizontal", Ship(4));
   player1.gameboard.placeShip([4,0], "horizontal", Ship(5));
 
-  player1.gameboard.receiveAttack(5,0);
-  player1.gameboard.receiveAttack(0,0);
-  player1.gameboard.receiveAttack(9,9);
-  player1.gameboard.receiveAttack(2,2);
-
   player2.gameboard.placeShip([0,0], "horizontal", Ship(2));
   player2.gameboard.placeShip([1,0], "horizontal", Ship(3));
   player2.gameboard.placeShip([2,0], "horizontal", Ship(3));
   player2.gameboard.placeShip([3,0], "horizontal", Ship(4));
   player2.gameboard.placeShip([4,0], "horizontal", Ship(5));
-
-  player2.gameboard.receiveAttack(0,0);
 
   const updatePage = () => {
     renderBoardShown(players[0], playerGameboardsUI[0]);
@@ -159,7 +152,6 @@ function Gameflow() {
 
   const playRound = (e) => {
     const clickedPlace = e.target;
-    console.log(getAttackingPlayer().type);
     if (
       !(clickedPlace.hasAttribute("data-x") || clickedPlace.hasAttribute("data-y")) ||
       !(clickedPlace.classList.contains("attack-enabled")) ||
@@ -173,14 +165,19 @@ function Gameflow() {
     updatePage();
     //check winning conditions
     changeTurns();
-    //check if new attacking player is a computer
-    //attack by computer
+
+    if (getAttackingPlayer().type === "computer") {
+      const coordinates = getAttackingPlayer().computeCoordinates(getTargetedPlayer().gameboard.attackedCoordinates);
+      getTargetedPlayer().gameboard.receiveAttack(...coordinates);
+    }
+    updatePage();
     //check winning conditions
-    //change turns
+    changeTurns();
   }
 
   initialize();
   playerGameboardsUI.forEach(boardUI => boardUI.addEventListener("click", playRound));
+  console.log(player2.computeCoordinates(player1.gameboard.attackedCoordinates));
 }
 
 export { Gameflow };
