@@ -93,7 +93,7 @@ function Gameflow() {
 
   const changeTurns = () => {
     toggleTargetedPlayer();
-    
+    toggleTargetedCell();
   }
 
   const renderNames = (players, namesUI) => {
@@ -155,9 +155,18 @@ function Gameflow() {
 
   const playRound = (e) => {
     console.log(e.target);
+    //conditions
+    //attack
+    //check winning conditions
+    //change turns
+    //check if new attacking player is a computer
+    //attack by computer
+    //check winning conditions
+    //change turns
   }
 
   initialize();
+  console.log(player2.computeCoordinates(player1.gameboard.attackedCoordinates))
 }
 
 export { Gameflow };
