@@ -14,6 +14,8 @@ function Gameflow() {
   const playerShipsUI = Array.from(document.querySelectorAll(".player-ships-container"));
   const playerGameboardsUI = Array.from(document.querySelectorAll(".player-gameboard"));
   const playerNamesUI = Array.from(document.querySelectorAll(".player-name"));
+  const endGameDialog = document.querySelector("dialog.restart-game-container");
+  const endGameButton = document.querySelector("button.endgame-button")
 
   let player1;
   let player2;
@@ -57,6 +59,14 @@ function Gameflow() {
     initialize();
   }
 
+  const showEndDialog = () => {
+    endGameDialog.showModal();
+  }
+
+  const closeEndDialog = () => {
+    endGameDialog.close();
+  }
+
   const clearBoard = (boardUI) => {
     boardUI.textContent = "";
   }
@@ -89,6 +99,14 @@ function Gameflow() {
   const changeTurns = () => {
     toggleTargetedPlayer();
     setTargetedCell();
+  }
+
+  const checkWinningConditions = () => {
+    if (getTargetedPlayer().gameboard.allSunk()) {
+      console.log("The winner is " + getAttackingPlayer().name);
+      showEndDialog();
+      return;
+    }
   }
 
   const renderNames = (players, namesUI) => {
@@ -164,7 +182,7 @@ function Gameflow() {
     };
     getTargetedPlayer().gameboard.receiveAttack(clickedPlace.dataset.y, clickedPlace.dataset.x);
     updatePage();
-    //check winning conditions
+    checkWinningConditions();
     changeTurns();
 
     if (getAttackingPlayer().type === "computer") {
@@ -172,14 +190,15 @@ function Gameflow() {
       getTargetedPlayer().gameboard.receiveAttack(...coordinates);
     }
     updatePage();
-    //check winning conditions
+    checkWinningConditions();
     changeTurns();
   }
 
-  initialize();
   playerGameboardsUI.forEach(boardUI => boardUI.addEventListener("click", playRound));
-  console.log(player2.computeCoordinates(player1.gameboard.attackedCoordinates));
-  document.querySelector(".missile-icon").addEventListener("click", resetGame);
+  endGameDialog.addEventListener("close", resetGame);
+  endGameButton.addEventListener("click", closeEndDialog);
+
+  initialize();
 }
 
 export { Gameflow };
