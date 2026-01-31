@@ -111,7 +111,7 @@ function Gameflow() {
 
   const setWinningMessage = () => {
     const winnerMessage = document.querySelector(".endgame-winner");
-    winnerMessage.textContent += getAttackingPlayer().name;
+    winnerMessage.textContent = "The winner is: " + getAttackingPlayer().name;
   }
 
   const renderNames = (players, namesUI) => {
