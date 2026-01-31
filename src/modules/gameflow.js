@@ -15,26 +15,10 @@ function Gameflow() {
   const playerGameboardsUI = Array.from(document.querySelectorAll(".player-gameboard"));
   const playerNamesUI = Array.from(document.querySelectorAll(".player-name"));
 
-  const player1 = Player("Player_1", GameBoard());
-  const player2 = ComputerPlayer("Player_2_PC", GameBoard());
-  const players = [player1, player2];
-  //set the computer player to be targeted first
-  let targetedPlayer = players[1];
-
-  console.log(player1);
-  console.log(player2);
-
-  player1.gameboard.placeShip([0,0], "horizontal", Ship(2));
-  player1.gameboard.placeShip([1,0], "horizontal", Ship(3));
-  player1.gameboard.placeShip([2,0], "horizontal", Ship(3));
-  player1.gameboard.placeShip([3,0], "horizontal", Ship(4));
-  player1.gameboard.placeShip([4,0], "horizontal", Ship(5));
-
-  player2.gameboard.placeShip([0,0], "horizontal", Ship(2));
-  player2.gameboard.placeShip([1,0], "horizontal", Ship(3));
-  player2.gameboard.placeShip([2,0], "horizontal", Ship(3));
-  player2.gameboard.placeShip([3,0], "horizontal", Ship(4));
-  player2.gameboard.placeShip([4,0], "horizontal", Ship(5));
+  let player1;
+  let player2;
+  let players;
+  let targetedPlayer;
 
   const updatePage = () => {
     renderBoardShown(players[0], playerGameboardsUI[0]);
@@ -45,10 +29,32 @@ function Gameflow() {
   }
 
   const initialize = () => {
+    //create players
+    player1 = Player("Player_1", GameBoard());
+    player2 = ComputerPlayer("Player_2_PC", GameBoard());
+    players = [player1, player2];
+
+    player1.gameboard.placeShip([0,0], "horizontal", Ship(2));
+    player1.gameboard.placeShip([1,0], "horizontal", Ship(3));
+    player1.gameboard.placeShip([2,0], "horizontal", Ship(3));
+    player1.gameboard.placeShip([3,0], "horizontal", Ship(4));
+    player1.gameboard.placeShip([4,0], "horizontal", Ship(5));
+
+    player2.gameboard.placeShip([0,0], "horizontal", Ship(2));
+    player2.gameboard.placeShip([1,0], "horizontal", Ship(3));
+    player2.gameboard.placeShip([2,0], "horizontal", Ship(3));
+    player2.gameboard.placeShip([3,0], "horizontal", Ship(4));
+    player2.gameboard.placeShip([4,0], "horizontal", Ship(5));
+
+    targetedPlayer = players[1];
     //render UI elemets
     updatePage();
     //set the board of targeted player to be enabled for attacking
     setTargetedCell();
+  }
+
+  const resetGame = () => {
+    initialize();
   }
 
   const clearBoard = (boardUI) => {
@@ -173,6 +179,7 @@ function Gameflow() {
   initialize();
   playerGameboardsUI.forEach(boardUI => boardUI.addEventListener("click", playRound));
   console.log(player2.computeCoordinates(player1.gameboard.attackedCoordinates));
+  document.querySelector(".missile-icon").addEventListener("click", resetGame);
 }
 
 export { Gameflow };
