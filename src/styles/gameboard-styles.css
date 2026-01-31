@@ -48,3 +48,34 @@
 .ship-dot-hit {
   background-color: darkred;
 }
+
+/* Modal for end-restart game */
+.restart-game-container {
+  margin: auto;
+  text-align: center;
+  padding: 1rem 1rem 0 1rem;
+  border-radius: 5px;
+}
+
+.restart-game-container::backdrop {
+  background-color: var(--light-blue);
+  opacity: 25%;
+}
+
+.restart-game-container > * {
+  margin-bottom: 1rem;
+}
+
+.endgame-button {
+  font-size: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--dark-blue);
+  background-color: var(--light-blue);
+  color: white;
+}
+
+.endgame-button:hover {
+  background-color: white;
+  color: var(--light-blue);
+  cursor: pointer;
+}

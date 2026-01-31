@@ -23,11 +23,11 @@ function Gameflow() {
   let targetedPlayer;
 
   const updatePage = () => {
-    renderBoardShown(players[0], playerGameboardsUI[0]);
-    renderBoardShown(players[1], playerGameboardsUI[1])
+    for (let i = 0; i < 2; i++) {
+      renderBoardShown(players[i], playerGameboardsUI[i]);
+      renderShips(players[i], playerShipsUI[i]);
+    }
     renderNames(players, playerNamesUI);
-    renderShips(players[0], playerShipsUI[0]);
-    renderShips(players[1], playerShipsUI[1]);
   }
 
   const initialize = () => {
@@ -105,8 +105,13 @@ function Gameflow() {
     if (getTargetedPlayer().gameboard.allSunk()) {
       console.log("The winner is " + getAttackingPlayer().name);
       showEndDialog();
-      return;
+      return true;
     }
+  }
+
+  const setWinningMessage = () => {
+    const winnerMessage = document.querySelector(".endgame-winner");
+    winnerMessage.textContent += getAttackingPlayer().name;
   }
 
   const renderNames = (players, namesUI) => {
@@ -182,7 +187,10 @@ function Gameflow() {
     };
     getTargetedPlayer().gameboard.receiveAttack(clickedPlace.dataset.y, clickedPlace.dataset.x);
     updatePage();
-    checkWinningConditions();
+    if (checkWinningConditions()) {
+      setWinningMessage();
+      return;
+    }
     changeTurns();
 
     if (getAttackingPlayer().type === "computer") {
@@ -190,7 +198,10 @@ function Gameflow() {
       getTargetedPlayer().gameboard.receiveAttack(...coordinates);
     }
     updatePage();
-    checkWinningConditions();
+    if (checkWinningConditions()) {
+      setWinningMessage();
+      return;
+    }
     changeTurns();
   }
 
