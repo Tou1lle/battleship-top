@@ -70,8 +70,8 @@ function GameBoard() {
 
   const placeRandomly = (ships) => {
     const directions = [vertical, horizontal];
+    const available = coordinatesHelper().available(placedShipCoordinates);
     ships.forEach(ship => {
-        let available = coordinatesHelper().available(placedShipCoordinates);
         let placed = false;
         do {
           let coordinates = coordinatesHelper().random(available);
