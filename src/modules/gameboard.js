@@ -72,10 +72,10 @@ function GameBoard() {
     const directions = [vertical, horizontal];
     ships.forEach(ship => {
         let available = coordinatesHelper().available(placedShipCoordinates);
-        let direction = coordinatesHelper().random(directions);
         let placed = false;
         do {
           let coordinates = coordinatesHelper().random(available);
+          let direction = coordinatesHelper().random(directions);
           placed = placeShip(coordinates, direction, ship);
         } while (!placed)
     });

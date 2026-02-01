@@ -19,9 +19,6 @@ const coordinatesHelper = () => {
   }
 
   return {
-    get allCoordinates() {
-      return allCoordinates;
-    },
     available,
     random
   }
