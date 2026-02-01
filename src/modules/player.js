@@ -25,8 +25,7 @@ function ComputerPlayer(name, gameboard, type = "computer") {
 
   const computeCoordinates = (attackedCoordinates) => {
     const availableCoordinates = player.getAvailableCoordinates(attackedCoordinates);
-    const index = Math.floor(Math.random() * availableCoordinates.length);
-    return availableCoordinates[index];
+    return coordinatesHelper().random(availableCoordinates);
   }
   
   return Object.assign({

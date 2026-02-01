@@ -68,6 +68,19 @@ function GameBoard() {
     return true;
   };
 
+  const placeRandomly = (ships) => {
+    const directions = [vertical, horizontal];
+    ships.forEach(ship => {
+        let available = coordinatesHelper().available(placedShipCoordinates);
+        let direction = coordinatesHelper().random(directions);
+        let placed = false;
+        do {
+          let coordinates = coordinatesHelper().random(available);
+          placed = placeShip(coordinates, direction, ship);
+        } while (!placed)
+    });
+  }
+
   const receiveAttack = (y, x) => {
     if (attackedCoordinates.find((arr) => arr[0] === y && arr[1] === x)) return false;
 
@@ -101,6 +114,7 @@ function GameBoard() {
     placeShip,
     receiveAttack,
     allSunk,
+    placeRandomly
   };
 }
 

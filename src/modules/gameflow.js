@@ -1,8 +1,8 @@
 import { Ship } from "./ship.js";
 import { GameBoard } from "./gameboard.js";
 import { Player, ComputerPlayer } from "./player.js";
-import rightToLeftMissile from "./../assets/missile-right.svg";
-import leftToRightMissile from "./../assets/missile-left.svg";
+import rightMissile from "./../assets/missile-right.svg";
+import leftMissile from "./../assets/missile-left.svg";
 
 const SHIP_NAMES = [
   "PATROAL BOAT",
@@ -38,24 +38,19 @@ function Gameflow() {
     player1 = Player("Player_1", GameBoard());
     player2 = ComputerPlayer("Player_2_PC", GameBoard());
     players = [player1, player2];
+    const ships1 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
+    const ships2 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
 
-    player1.gameboard.placeShip([0,0], "horizontal", Ship(2));
-    player1.gameboard.placeShip([1,0], "horizontal", Ship(3));
-    player1.gameboard.placeShip([2,0], "horizontal", Ship(3));
-    player1.gameboard.placeShip([3,0], "horizontal", Ship(4));
-    player1.gameboard.placeShip([4,0], "horizontal", Ship(5));
-
-    player2.gameboard.placeShip([0,0], "horizontal", Ship(2));
-    player2.gameboard.placeShip([1,0], "horizontal", Ship(3));
-    player2.gameboard.placeShip([2,0], "horizontal", Ship(3));
-    player2.gameboard.placeShip([3,0], "horizontal", Ship(4));
-    player2.gameboard.placeShip([4,0], "horizontal", Ship(5));
+    player1.gameboard.placeRandomly(ships1);
+    player2.gameboard.placeRandomly(ships2);
 
     targetedPlayer = players[1];
     //render UI elemets
     updatePage();
     //set the board of targeted player to be enabled for attacking
     setTargetedCell();
+    //set missile left to right (player first)
+    missileIcon.src = rightMissile;
   }
 
   const resetGame = () => {
@@ -195,7 +190,7 @@ function Gameflow() {
       return;
     }
     changeTurns();
-    missileIcon.src = leftToRightMissile;
+    missileIcon.src = leftMissile;
 
     if (getAttackingPlayer().type === "computer") {
       setTimeout(() => {
@@ -210,7 +205,7 @@ function Gameflow() {
           return;
         }
         changeTurns();
-        missileIcon.src = rightToLeftMissile;
+        missileIcon.src = rightMissile;
       }, 1500)
     }
   }

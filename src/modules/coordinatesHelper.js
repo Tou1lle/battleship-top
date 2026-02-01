@@ -14,11 +14,16 @@ const coordinatesHelper = () => {
     }));
   }
 
+  const random = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
   return {
     get allCoordinates() {
       return allCoordinates;
     },
-    available
+    available,
+    random
   }
 }
 
