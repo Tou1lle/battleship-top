@@ -1,6 +1,8 @@
 import { Ship } from "./ship.js";
 import { GameBoard } from "./gameboard.js";
 import { Player, ComputerPlayer } from "./player.js";
+import rightToLeftMissile from "./../assets/missile-right.svg";
+import leftToRightMissile from "./../assets/missile-left.svg";
 
 const SHIP_NAMES = [
   "PATROAL BOAT",
@@ -15,7 +17,8 @@ function Gameflow() {
   const playerGameboardsUI = Array.from(document.querySelectorAll(".player-gameboard"));
   const playerNamesUI = Array.from(document.querySelectorAll(".player-name"));
   const endGameDialog = document.querySelector("dialog.restart-game-container");
-  const endGameButton = document.querySelector("button.endgame-button")
+  const endGameButton = document.querySelector("button.endgame-button");
+  const missileIcon = document.querySelector(".missile-icon > img");
 
   let player1;
   let player2;
@@ -192,17 +195,24 @@ function Gameflow() {
       return;
     }
     changeTurns();
+    missileIcon.src = leftToRightMissile;
 
     if (getAttackingPlayer().type === "computer") {
-      const coordinates = getAttackingPlayer().computeCoordinates(getTargetedPlayer().gameboard.attackedCoordinates);
-      getTargetedPlayer().gameboard.receiveAttack(...coordinates);
+      setTimeout(() => {
+        const coordinates = getAttackingPlayer()
+                            .computeCoordinates(getTargetedPlayer()
+                            .gameboard
+                            .attackedCoordinates);
+        getTargetedPlayer().gameboard.receiveAttack(...coordinates);
+        updatePage();
+        if (checkWinningConditions()) {
+          setWinningMessage();
+          return;
+        }
+        changeTurns();
+        missileIcon.src = rightToLeftMissile;
+      }, 1500)
     }
-    updatePage();
-    if (checkWinningConditions()) {
-      setWinningMessage();
-      return;
-    }
-    changeTurns();
   }
 
   playerGameboardsUI.forEach(boardUI => boardUI.addEventListener("click", playRound));
