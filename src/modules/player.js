@@ -1,17 +1,9 @@
+import { coordinatesHelper } from "./coordinatesHelper.js";
+
 function Player(name, gameboard, type = "real") {
-  const allCoordinates = [];
-  for (let y = 0; y < 10; y++) {
-    for (let x = 0; x < 10; x++) {
-      allCoordinates.push([y,x]);
-    }
-  }
 
   const getAvailableCoordinates = (attackedCoordinates) => {
-    return allCoordinates
-    .filter(yx => !attackedCoordinates
-    .some(usedYX => {
-      return usedYX.join("") === yx.join("")
-    }));
+    return coordinatesHelper().available(attackedCoordinates);
   }
 
   return {

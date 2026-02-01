@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { Ship } from "./ship.js";
+import { coordinatesHelper } from "./coordinatesHelper.js";
 
 /**
  * Representation of the board where Ships are placed
@@ -10,6 +11,7 @@ function GameBoard() {
     .fill()
     .map(() => Array(10).fill(""));
   const attackedCoordinates = [];
+  const placedShipCoordinates = [];
   const ships = [];
   const miss = "x";
   const lowerEdge = 0;
@@ -61,6 +63,7 @@ function GameBoard() {
       direction === vertical ? row++ : col++ ;
     }
 
+    placedShipCoordinates.push(rowCol);
     ships.push(ship);
     return true;
   };
