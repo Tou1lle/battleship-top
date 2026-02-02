@@ -1,9 +1,10 @@
 import { coordinatesHelper } from "./coordinatesHelper.js";
 
 function Player(name, gameboard, type = "real") {
+  const coordinates = coordinatesHelper();
 
   const getAvailableCoordinates = (attackedCoordinates) => {
-    return coordinatesHelper().available(attackedCoordinates);
+    return coordinates.available(attackedCoordinates);
   }
 
   return {
@@ -17,6 +18,7 @@ function Player(name, gameboard, type = "real") {
       return gameboard;
     },
     getAvailableCoordinates,
+    coordinates,
   };
 }
 
@@ -25,7 +27,7 @@ function ComputerPlayer(name, gameboard, type = "computer") {
 
   const computeCoordinates = (attackedCoordinates) => {
     const availableCoordinates = player.getAvailableCoordinates(attackedCoordinates);
-    return coordinatesHelper().random(availableCoordinates);
+    return player.coordinates.random(availableCoordinates);
   }
   
   return Object.assign({

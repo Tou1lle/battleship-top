@@ -18,6 +18,7 @@ function GameBoard() {
   const upperEdge = board.length - 1;
   const vertical = "vertical";
   const horizontal = "horizontal";
+  const coordinates = coordinatesHelper();
 
   const withinBounds = (n) => {
     return n >= lowerEdge && n <= upperEdge;
@@ -70,13 +71,13 @@ function GameBoard() {
 
   const placeRandomly = (ships) => {
     const directions = [vertical, horizontal];
-    const available = coordinatesHelper().available(placedShipCoordinates);
+    const available = coordinates.available(placedShipCoordinates);
     ships.forEach(ship => {
         let placed = false;
         do {
-          let coordinates = coordinatesHelper().random(available);
-          let direction = coordinatesHelper().random(directions);
-          placed = placeShip(coordinates, direction, ship);
+          let xy = coordinates.random(available);
+          let direction = coordinates.random(directions);
+          placed = placeShip(xy, direction, ship);
         } while (!placed)
     });
   }
