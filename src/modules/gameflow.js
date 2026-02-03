@@ -2,6 +2,7 @@ import { Ship } from "./ship.js";
 import { GameBoard } from "./gameboard.js";
 import { Player, ComputerPlayer } from "./player.js";
 import { renderHelper } from "./renderHelper.js";
+import { ShipPlacer } from "./shipPlacer.js";
 import rightMissile from "./../assets/missile-right.svg";
 import leftMissile from "./../assets/missile-left.svg";
 
@@ -36,6 +37,8 @@ function Gameflow() {
     players = [player1, player2];
     const ships1 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
     const ships2 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
+
+    ShipPlacer(player1, ships1);
 
     player1.gameboard.placeRandomly(ships1);
     player2.gameboard.placeRandomly(ships2);
