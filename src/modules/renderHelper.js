@@ -35,6 +35,27 @@ const renderHelper = () => {
     });
   }
 
+  const renderBoardHidden = (player, boardUI) => {
+    player.gameboard.board.forEach((row, indexY) => {
+      row.forEach((collumn, indexX) => {
+        const div = document.createElement("div");
+        const occupant = !collumn ? "empty" : collumn === "x" ? "missed-shot" : "ship";
+        const hitShip = player.gameboard.attackedCoordinates.some((
+          xy => xy.join("") === `${indexY}${indexX}` && occupant === "ship"
+        )) ? true : false;
+        div.classList.add(occupant);
+        div.classList.add("cell");
+        div.dataset.y = indexY;
+        div.dataset.x = indexX;
+        if (hitShip) div.classList.add("hit");
+        if (div.classList.contains("hit") || div.classList.contains("missed-shot")) {
+          div.classList.add("attack-invalid");
+        }
+        boardUI.appendChild(div);
+      })
+    });
+  }
+
   const renderShips = (player, shipsUI) => {
     player.gameboard.ships.forEach((ship, id) => {
       const div = document.createElement("div");
@@ -68,6 +89,7 @@ const renderHelper = () => {
   return {
     renderNames,
     renderBoardShown,
+    renderBoardHidden,
     renderShips
   }
 }

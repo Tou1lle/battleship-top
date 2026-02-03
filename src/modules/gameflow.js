@@ -24,7 +24,11 @@ function Gameflow() {
     for (let i = 0; i < 2; i++) {
       clearBoard(playerGameboardsUI[i]);
       clearShips(playerShipsUI[i]);
-      render.renderBoardShown(players[i], playerGameboardsUI[i]);
+      if (players[i].type === "real") {
+        render.renderBoardShown(players[i], playerGameboardsUI[i]);
+      } else {
+        render.renderBoardHidden(players[i], playerGameboardsUI[i]);
+      }
       render.renderShips(players[i], playerShipsUI[i]);
     }
     render.renderNames(players, playerNamesUI);

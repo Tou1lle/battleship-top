@@ -24,11 +24,11 @@
   background-color: var(--battleship-gray);
 }
 
-.cell.show.missed-shot {
+.cell.missed-shot {
   background-color: var(--light-blue);
 }
 
-.cell.ship.show.hit {
+.cell.ship.hit {
   background-color: darkred;
 }
 
