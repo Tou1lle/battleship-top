@@ -1,5 +1,9 @@
 import { coordinatesHelper } from "./coordinatesHelper.js";
 
+const player = Symbol("player");
+
+const isPlayer = (obj) => obj[player];
+
 function Player(name, gameboard, type = "real") {
   const coordinates = coordinatesHelper();
 
@@ -8,6 +12,7 @@ function Player(name, gameboard, type = "real") {
   }
 
   return {
+    [player]: true,
     get name() {
       return name;
     },
@@ -35,4 +40,4 @@ function ComputerPlayer(name, gameboard, type = "computer") {
   }, player);
 }
 
-export { Player, ComputerPlayer };
+export { Player, ComputerPlayer, isPlayer };

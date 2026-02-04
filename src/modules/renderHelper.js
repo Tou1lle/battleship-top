@@ -1,3 +1,5 @@
+import { isPlayer } from "./player.js";
+
 const SHIP_NAMES = [
   "PATROAL BOAT",
   "SUBMARINE",
@@ -56,10 +58,12 @@ const renderHelper = () => {
     });
   }
 
-  const renderShips = (player, shipsUI) => {
-    player.gameboard.ships.forEach((ship, id) => {
+  const renderShips = (providedShips, shipsUI, names = true) => {
+    const ships = isPlayer(providedShips) === true 
+    ? providedShips.gameboard.ships
+    : providedShips 
+    ships.forEach((ship, id) => {
       const div = document.createElement("div");
-      const shipNameH3 = document.createElement("h3");
       const shipLengthDots = document.createElement("div");
       for (let i = 0; i < ship.length; i++) {
         const dot = document.createElement("div");
@@ -67,12 +71,20 @@ const renderHelper = () => {
         shipLengthDots.appendChild(dot);
       }
       shipLengthDots.classList.add("ship-dots-container");
-      shipNameH3.classList.add("ship-name")
       div.classList.add("ship-item");
+      
+      if (!isPlayer(providedShips)) {
+        div.classList.add("place-ship");
+      }
 
-      shipNameH3.textContent = SHIP_NAMES[id];
+      if (names) {
+        const shipNameH3 = document.createElement("h3"); 
+        shipNameH3.classList.add("ship-name")
+        shipNameH3.textContent = SHIP_NAMES[id];
+        div.appendChild(shipNameH3);
+      }
 
-      div.append(shipNameH3, shipLengthDots);
+      div.appendChild(shipLengthDots);
       shipsUI.appendChild(div);
       renderTimesHit(ship, shipLengthDots);
     });

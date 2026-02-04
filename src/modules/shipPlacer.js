@@ -25,6 +25,7 @@ const ShipPlacer = (player, ships) => {
   const initial = () => {
     placementDialog.showModal();
     render.renderBoardShown(player, placementBoard);
+    render.renderShips(ships, placementShips, false)
   }
 
   const toggleDirection = (e) => {
