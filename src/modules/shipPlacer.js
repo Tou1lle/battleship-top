@@ -36,11 +36,28 @@ const ShipPlacer = (player, ships) => {
     : "vertical".toLocaleUpperCase(); 
   }
 
+  const toggleShipsDirection = () => {
+    const direction = getDirection(placementDirectionBtn);
+    const shipsContainer = Array.from(document.querySelectorAll(".ship-dots-container-placement"));
+    shipsContainer.forEach(ship => {
+      if (direction === "vertical") {
+        ship.style.flexDirection = "column"
+      } else if (direction === "horizontal") {
+        ship.style.flexDirection = "row"
+      } else {
+        console.log("Direction error");
+      }
+    })
+  }
+
   const getDirection = (directionNode) => {
     return directionNode.textContent.toLowerCase();
   }
 
-  placementDirectionBtn.addEventListener("click", toggleDirection);
+  placementDirectionBtn.addEventListener("click", (e) => {
+    toggleDirection(e);
+    toggleShipsDirection();
+  });
 
   initial();
 }
