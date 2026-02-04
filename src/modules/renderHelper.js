@@ -68,12 +68,14 @@ const renderHelper = () => {
       for (let i = 0; i < ship.length; i++) {
         const dot = document.createElement("div");
         dot.classList.add("ship-dot");
+        if (!isPlayer(providedShips)) dot.classList.add("ship-dot-placement")
         shipLengthDots.appendChild(dot);
       }
       shipLengthDots.classList.add("ship-dots-container");
       div.classList.add("ship-item");
       
       if (!isPlayer(providedShips)) {
+        shipLengthDots.classList.add("ship-dots-container-placement");
         div.classList.add("place-ship");
       }
 
