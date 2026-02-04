@@ -70,6 +70,7 @@ const renderHelper = () => {
         dot.classList.add("ship-dot");
         if (!isPlayer(providedShips)) dot.classList.add("ship-dot-placement")
         shipLengthDots.appendChild(dot);
+        div.dataset.id = ship.id;
       }
       shipLengthDots.classList.add("ship-dots-container");
       div.classList.add("ship-item");

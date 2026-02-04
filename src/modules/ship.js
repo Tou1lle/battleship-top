@@ -4,6 +4,7 @@
  */
 function Ship(length) {
   let timesHit = 0;
+  const id = crypto.randomUUID();
 
   const hit = () => timesHit++;
   const isSunk = () => timesHit >= length;
@@ -14,6 +15,9 @@ function Ship(length) {
     },
     get length() {
       return length;
+    },
+    get id() {
+      return id;
     },
     hit,
     isSunk,
