@@ -1,5 +1,52 @@
+/* containers */
 .ship-placement-container {
   margin: auto;
   width: 70%;
-  height: 70%;
+}
+
+.board-placement-container {
+  display: flex;
+}
+
+.ship-direction-placement-container {
+  margin: 0 auto;
+}
+
+.button-placement-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+/* board styling - duplicate a little from gameboard-styles.css */
+.placement-board {
+  margin-top: 20px;
+  border: 2px solid var(--dark-sand);
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  width: var(--gameboard-size);
+  height: var(--gameboard-size);
+}
+
+/* buttons styling */
+.placement-direction-btn,
+.placement-random-btn,
+.placement-confirm-btn {
+  text-transform: uppercase;
+  width: 10rem;
+  height: 2rem;
+  border: 1px solid var(--light-sand);
+  border-radius: 10px;
+  font-weight: 700;
+  color: var(--light-blue);
+  font-size: 1rem;
+}
+
+.placement-direction-btn:hover,
+.placement-random-btn:hover,
+.placement-confirm-btn:hover {
+  cursor: pointer;
+  background-color: var(--light-sand);
 }
