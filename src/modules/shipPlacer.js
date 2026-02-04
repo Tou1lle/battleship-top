@@ -25,7 +25,8 @@ const ShipPlacer = (player, ships) => {
   const initial = () => {
     placementDialog.showModal();
     render.renderBoardShown(player, placementBoard);
-    render.renderShips(ships, placementShips, false)
+    render.renderShips(ships, placementShips, false);
+    setDraggable(Array.from(document.querySelectorAll(".place-ship")));
   }
 
   const toggleDirection = (e) => {
@@ -48,6 +49,10 @@ const ShipPlacer = (player, ships) => {
         console.log("Direction error");
       }
     })
+  }
+
+  const setDraggable = (ships) => {
+    ships.forEach(ship => ship.setAttribute("draggable", true));
   }
 
   const getDirection = (directionNode) => {

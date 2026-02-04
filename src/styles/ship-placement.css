@@ -68,3 +68,8 @@
   gap: 20px;
   padding: 20px 70px;
 }
+
+.ship-item {
+  width: fit-content;
+  height: fit-content;
+}
