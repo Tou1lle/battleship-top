@@ -26,7 +26,7 @@ const ShipPlacer = (player, ships) => {
     placementDialog.showModal();
     render.renderBoardShown(player, placementBoard);
     render.renderShips(ships, placementShips, false);
-    setDraggable(Array.from(document.querySelectorAll(".place-ship")));
+    setDraggable(getPlaceShips());
   }
 
   const toggleDirection = (e) => {
@@ -59,12 +59,48 @@ const ShipPlacer = (player, ships) => {
     return directionNode.textContent.toLowerCase();
   }
 
+  const getPlaceShips = () => {
+    return Array.from(document.querySelectorAll(".place-ship"));
+  }
+
+  const getCells = () => {
+    return Array.from(document.querySelectorAll(".cell"));
+  }
+
+  const dragstartHandler = (e) => {
+    console.log("i run");
+    e.dataTransfer.setData("ship-id", e.currentTarget.dataset.id);
+  }
+
+  const dragoverHandler = (e) => {
+    e.preventDefault();
+  }
+
+  const dropHandler = (e) => {
+    console.log("I run")
+    e.preventDefault();
+    const shipId = e.dataTransfer.getData("ship-id")
+    console.log(shipId);
+  }
+
   placementDirectionBtn.addEventListener("click", (e) => {
     toggleDirection(e);
     toggleShipsDirection();
   });
 
   initial();
+  
+  getPlaceShips().forEach(shipDiv => {
+    shipDiv.addEventListener("dragstart", dragstartHandler);
+  })
+
+  getCells().forEach(cell => {
+    cell.addEventListener("dragover", dragoverHandler);
+  })
+
+  getCells().forEach(cell => {
+    cell.addEventListener("drop", dropHandler);
+  })
 }
 
 export { ShipPlacer };
