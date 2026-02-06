@@ -24,7 +24,7 @@ function GameBoard() {
     return n >= lowerEdge && n <= upperEdge;
   };
 
-  const hasEnouhSpace = (rowCol, direction, ship) => {
+  const hasEnoughSpace = (rowCol, direction, ship) => {
     let [row, col] = rowCol;
     if (!withinBounds(row) || !withinBounds(col)) return false;
     if (direction != vertical && direction != horizontal) throw new Error("Invalid direction");
@@ -56,7 +56,7 @@ function GameBoard() {
    * @returns 
    */
   const placeShip = (rowCol, direction, ship) => {
-    if (!hasEnouhSpace(rowCol, direction, ship) || occupied(rowCol, direction, ship)) return false;
+    if (!hasEnoughSpace(rowCol, direction, ship) || occupied(rowCol, direction, ship)) return false;
     let [row, col] = rowCol;
 
     for (let i = 0; i < ship.length; i++) {
@@ -115,7 +115,9 @@ function GameBoard() {
     placeShip,
     receiveAttack,
     allSunk,
-    placeRandomly
+    placeRandomly,
+    occupied,
+    hasEnoughSpace
   };
 }
 

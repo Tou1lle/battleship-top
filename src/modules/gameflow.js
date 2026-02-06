@@ -44,7 +44,6 @@ function Gameflow() {
 
     ShipPlacer(player1, ships1);
 
-    player1.gameboard.placeRandomly(ships1);
     player2.gameboard.placeRandomly(ships2);
 
     targetedPlayer = players[1];

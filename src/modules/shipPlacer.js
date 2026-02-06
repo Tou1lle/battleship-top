@@ -24,9 +24,7 @@ const ShipPlacer = (player, ships) => {
 
   const initial = () => {
     placementDialog.showModal();
-    render.renderBoardShown(player, placementBoard);
-    render.renderShips(ships, placementShips, false);
-    setDraggable(getPlaceShips());
+    reRender();
   }
 
   const toggleDirection = (e) => {
@@ -53,10 +51,23 @@ const ShipPlacer = (player, ships) => {
 
   const setDraggable = (ships) => {
     ships.forEach(ship => ship.setAttribute("draggable", true));
+    getPlaceShips().forEach(shipDiv => {
+    shipDiv.addEventListener("dragstart", dragstartHandler);
+  })
   }
 
-  const getDirection = (directionNode) => {
-    return directionNode.textContent.toLowerCase();
+  const setDropable = () => {
+    getCells().forEach(cell => {
+    cell.addEventListener("dragover", dragoverHandler);
+  })
+
+  getCells().forEach(cell => {
+    cell.addEventListener("drop", dropHandler);
+  })
+  }
+
+  const getDirection = () => {
+    return placementDirectionBtn.textContent.toLowerCase().trim();
   }
 
   const getPlaceShips = () => {
@@ -67,20 +78,50 @@ const ShipPlacer = (player, ships) => {
     return Array.from(document.querySelectorAll(".cell"));
   }
 
+  const removePlaced = () => {
+    player.gameboard.ships.forEach(ship => {
+      const placeShip = getPlaceShips().find(placeShip => placeShip.dataset.id === ship.id);
+      if (placeShip) placeShip.remove();
+    })
+  }
+
   const dragstartHandler = (e) => {
     console.log("i run");
     e.dataTransfer.setData("ship-id", e.currentTarget.dataset.id);
+    console.log(e.currentTarget.dataset.id);
   }
 
   const dragoverHandler = (e) => {
     e.preventDefault();
   }
 
+  const reRender = () => {
+    placementBoard.textContent = "";
+    placementShips.textContent = "";
+    render.renderBoardShown(player, placementBoard);
+    render.renderShips(ships, placementShips, false);
+    toggleShipsDirection();
+    removePlaced();
+    setDraggable(getPlaceShips());
+    setDropable();
+  }
+
   const dropHandler = (e) => {
     console.log("I run")
     e.preventDefault();
-    const shipId = e.dataTransfer.getData("ship-id")
+    const shipId = e.dataTransfer.getData("ship-id");
+    const ship = ships.find(ship => ship.id === shipId);
     console.log(shipId);
+    console.log(ship);
+    const coordinates = [e.currentTarget.dataset.y, e.currentTarget.dataset.x];
+    if (!player.gameboard.hasEnoughSpace(coordinates, getDirection(), ship)
+      || player.gameboard.occupied(coordinates, getDirection(), ship)) {
+      console.log("Invalid");
+      return;
+    } else {
+      player.gameboard.placeShip(coordinates, getDirection(), ship);
+      reRender();
+    }
   }
 
   placementDirectionBtn.addEventListener("click", (e) => {
