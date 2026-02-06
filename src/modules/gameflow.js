@@ -42,17 +42,13 @@ function Gameflow() {
     const ships1 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
     const ships2 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
 
-    ShipPlacer(player1, ships1);
-
     player2.gameboard.placeRandomly(ships2);
-
+    ShipPlacer(player1, ships1, () => {
+      updatePage();
+      setTargetedCell();
+      missileIcon.src = rightMissile;
+    });
     targetedPlayer = players[1];
-    //render UI elemets
-    updatePage();
-    //set the board of targeted player to be enabled for attacking
-    setTargetedCell();
-    //set missile left to right (player first)
-    missileIcon.src = rightMissile;
   }
 
   const resetGame = () => {

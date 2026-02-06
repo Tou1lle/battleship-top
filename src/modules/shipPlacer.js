@@ -15,11 +15,12 @@ import { renderHelper } from "./renderHelper.js";
  * - run until all ships placed and user hits confirm
  */
 
-const ShipPlacer = (player, ships) => {
+const ShipPlacer = (player, ships, onConfirm) => {
   const placementDialog = document.querySelector(".ship-placement-container");
   const placementBoard = document.querySelector(".placement-board");
   const placementShips = document.querySelector(".placement-ships");
   const placementDirectionBtn = document.querySelector(".placement-direction-btn");
+  const placementConfirmBtn = document.querySelector(".placement-confirm-btn");
   const render = renderHelper();
 
   const initial = () => {
@@ -142,6 +143,12 @@ const ShipPlacer = (player, ships) => {
   getCells().forEach(cell => {
     cell.addEventListener("drop", dropHandler);
   })
+
+  placementConfirmBtn.addEventListener("click", () => {
+    if (player.gameboard.ships.length != 5) return;
+    placementDialog.close();
+    onConfirm();
+  }) 
 }
 
 export { ShipPlacer };
