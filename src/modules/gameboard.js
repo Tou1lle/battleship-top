@@ -69,7 +69,16 @@ function GameBoard() {
     return true;
   };
 
+  const resetGameboard = () => {
+    while (ships.length > 0) {
+      ships.pop();
+    }
+
+    board.forEach((row, i) => board[i] = Array(10).fill(""));
+  }
+
   const placeRandomly = (ships) => {
+    resetGameboard();
     const directions = [vertical, horizontal];
     const available = coordinates.available(placedShipCoordinates);
     ships.forEach(ship => {
@@ -117,7 +126,8 @@ function GameBoard() {
     allSunk,
     placeRandomly,
     occupied,
-    hasEnoughSpace
+    hasEnoughSpace,
+    resetGameboard
   };
 }
 

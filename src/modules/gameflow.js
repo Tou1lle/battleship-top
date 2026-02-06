@@ -27,15 +27,14 @@ function Gameflow() {
       if (players[i].type === "real") {
         render.renderBoardShown(players[i], playerGameboardsUI[i]);
       } else {
-        render.renderBoardHidden(players[i], playerGameboardsUI[i]);
+        render.renderBoardShown(players[i], playerGameboardsUI[i]);
       }
       render.renderShips(players[i], playerShipsUI[i]);
     }
     render.renderNames(players, playerNamesUI);
   }
 
-  const initialize = () => {
-    //create players
+  const resetGame = () => {
     player1 = Player("Player_1", GameBoard());
     player2 = ComputerPlayer("Player_2_PC", GameBoard());
     players = [player1, player2];
@@ -43,16 +42,11 @@ function Gameflow() {
     const ships2 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
 
     player2.gameboard.placeRandomly(ships2);
-    ShipPlacer(player1, ships1, () => {
-      updatePage();
-      setTargetedCell();
-      missileIcon.src = rightMissile;
-    });
-    targetedPlayer = players[1];
-  }
+    shipPlacer.resetPlayer(player1);
+    shipPlacer.resetShips(ships1);
+    shipPlacer.restartPlacer();
 
-  const resetGame = () => {
-    initialize();
+    targetedPlayer = players[1];
   }
 
   const showEndDialog = () => {
@@ -152,7 +146,20 @@ function Gameflow() {
   endGameDialog.addEventListener("close", resetGame);
   endGameButton.addEventListener("click", closeEndDialog);
 
-  initialize();
+  //Inital creation
+    player1 = Player("Player_1", GameBoard());
+    player2 = ComputerPlayer("Player_2_PC", GameBoard());
+    players = [player1, player2];
+    const ships1 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
+    const ships2 = [Ship(2), Ship(3), Ship(3), Ship(4), Ship(5)];
+
+    player2.gameboard.placeRandomly(ships2);
+    const shipPlacer = ShipPlacer(player1, ships1, () => {
+      updatePage();
+      setTargetedCell();
+      missileIcon.src = rightMissile;
+    });
+    targetedPlayer = players[1];
 }
 
 export { Gameflow };

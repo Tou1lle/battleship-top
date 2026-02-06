@@ -20,10 +20,24 @@ const ShipPlacer = (player, ships, onConfirm) => {
   const placementBoard = document.querySelector(".placement-board");
   const placementShips = document.querySelector(".placement-ships");
   const placementDirectionBtn = document.querySelector(".placement-direction-btn");
+  const placementRandomBtn = document.querySelector(".placement-random-btn");
   const placementConfirmBtn = document.querySelector(".placement-confirm-btn");
   const render = renderHelper();
 
   const initial = () => {
+    placementDialog.showModal();
+    reRender();
+  }
+
+  const resetPlayer = (newPlayer) => {
+    player = newPlayer;
+  }
+
+  const resetShips = (newShips) => {
+    ships = newShips;
+  }
+
+  const restartPlacer = () => {
     placementDialog.showModal();
     reRender();
   }
@@ -145,10 +159,23 @@ const ShipPlacer = (player, ships, onConfirm) => {
   })
 
   placementConfirmBtn.addEventListener("click", () => {
+    console.log("ships length: " + player.gameboard.ships.length);
     if (player.gameboard.ships.length != 5) return;
     placementDialog.close();
     onConfirm();
-  }) 
+  })
+  
+  placementRandomBtn.addEventListener("click", () => {
+    player.gameboard.placeRandomly(ships);
+    console.log(player.gameboard.ships.length);
+    reRender();
+  })
+
+  return {
+    resetPlayer,
+    resetShips,
+    restartPlacer
+  }
 }
 
 export { ShipPlacer };
