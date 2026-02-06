@@ -27,7 +27,7 @@ function Gameflow() {
       if (players[i].type === "real") {
         render.renderBoardShown(players[i], playerGameboardsUI[i]);
       } else {
-        render.renderBoardShown(players[i], playerGameboardsUI[i]);
+        render.renderBoardHidden(players[i], playerGameboardsUI[i]);
       }
       render.renderShips(players[i], playerShipsUI[i]);
     }
